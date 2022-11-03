@@ -49,9 +49,22 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.31")
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test"){
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+        exclude(module = "mockito-core")
+    }
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("com.ninja-squad:springmockk:3.1.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.5.3")
+    testImplementation("io.mockk:mockk:1.13.2")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks {
+    withType<Test> {
+        useJUnitPlatform()
+    }
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
