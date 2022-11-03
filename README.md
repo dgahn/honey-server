@@ -53,6 +53,10 @@ POST /api/v1/memberships
 
 ### 포인트 적립 API
 
+```
+POST /api/v1/points
+```
+
 - 포인트 적립은 상점의 업종별로 통합하여 적립
 - 등록된 상점이 아닌 경우 상점 오류 에러를 반환한다.
 - 등록된 바코드가 아닌 경우 바코드 오류 에러를 반환한다.
@@ -67,11 +71,9 @@ POST /api/v1/memberships
 
 #### Response Body Param
 
-| Name             | Type | Description                |
-|------------------|------|----------------------------|
-| membershipCode   | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
-| category | Int    | 업종                         |
-| totalPoint       | Int    | 해당 업종의 총 Point             |
+| Name    | Type | Description      |
+|---------|------|------------------|
+| pointId | Long | 멤버십과 업종별 포인트 식별자 |
 
 ### 포인트 사용 API
 
@@ -82,33 +84,31 @@ POST /api/v1/memberships
 
 #### Request Body Param
 
-| Name           | Type   | Description                | 
-|----------------|--------|----------------------------|
-| category         | Int    | 업종                      |
-| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
-| point          | Int    | 적립할 포인트                    |
+| Name           | Type   | Description                        | 
+|----------------|--------|------------------------------------|
+| category       | Int    | 업종                                |
+| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성  |
+| point          | Int    | 적립할 포인트                          |
 
 #### Response Body Param
 
-| Name             | Type | Description                |
-|------------------|------|----------------------------|
-| membershipCode   | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
-| category | Int    | 업종                         |
-| totalPoint       | Int    | 해당 업종의 총 Point             |
+| Name    | Type | Description      |
+|---------|------|------------------|
+| pointId | Long | 멤버십과 업종별 포인트 식별자 |
 
 ### 내역 조회 API
 
-#### Request Param
-
 - 등록된 바코드가 아닌 경우 바코드 오류 에러를 반환한다.
 
-| Param Type     | Name    | Type   | Description              | 
-|----------------|---------|--------|--------------------------|
-| query          | startAt | Int    | 조회할 포인트를 적립/사용한 시기의 시작기간 |
-| query          | endAt   | String | 조회할 포인트를 적립/사용한 시기의 끝기간  |
-| membershipCode | point   | Int    | 멤버십 코드               |
+#### Request Query Param
 
-#### Response Param
+| Name    | Type   | Description              | 
+|---------|--------|--------------------------|
+| startAt | Int    | 조회할 포인트를 적립/사용한 시기의 시작기간 |
+| endAt   | String | 조회할 포인트를 적립/사용한 시기의 끝기간  |
+| point   | Int    | 멤버십 코드                   |
+
+#### Response Body Param
 
 | Name        | Type | Description    |
 |-------------|------|----------------|
