@@ -706,7 +706,7 @@ style:
   PreferToOverPairSyntax:
     active: false
   ProtectedMemberInFinalClass:
-    active: true
+    active: false
   RedundantExplicitType:
     active: false
   RedundantHigherOrderMapUsage:

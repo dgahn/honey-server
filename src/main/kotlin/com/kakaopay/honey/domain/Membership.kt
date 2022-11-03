@@ -6,5 +6,6 @@ import javax.persistence.Id
 @Entity
 class Membership(
     @Id
-    val code: String
+    val code: String,
+    val userId: String
 )

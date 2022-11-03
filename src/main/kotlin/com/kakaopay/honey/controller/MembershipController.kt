@@ -18,7 +18,7 @@ class MembershipController(
     fun createMembership(
         @RequestBody request: CreateMembershipRequestDto
     ): ResponseEntity<CreateMembershipResponseDto> {
-        val responseDto = membershipApplicationService.createMembership(request).toCreateMembershipResponseDto()
+        val responseDto = membershipApplicationService.createMembership(request.userId).toCreateMembershipResponseDto()
         return ResponseEntity.ok(responseDto)
     }
 }
