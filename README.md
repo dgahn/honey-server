@@ -54,7 +54,7 @@ POST /api/v1/memberships
 ### 포인트 적립 API
 
 ```
-POST /api/v1/points
+PUT /api/v1/point/earn
 ```
 
 - 포인트 적립은 상점의 업종별로 통합하여 적립
@@ -63,11 +63,12 @@ POST /api/v1/points
 
 #### Request Body Param
 
-| Name           | Type   | Description                | 
-|----------------|--------|----------------------------|
-| category         | Int    | 업종                      |
-| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
-| point          | Int    | 적립할 포인트                    |
+| Name           | Type   | Description                  | 
+|----------------|--------|------------------------------|
+| category       | Int    | 업종                           |
+| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성   |
+| point          | Int    | 적립할 포인트                      |
+| partnerName    | String | 상점명                          |
 
 #### Response Body Param
 
