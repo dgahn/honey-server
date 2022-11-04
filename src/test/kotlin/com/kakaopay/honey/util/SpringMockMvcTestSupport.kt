@@ -17,7 +17,7 @@ abstract class SpringMockMvcTestSupport {
 
     protected inline fun <reified T> mockMvcGetTest(
         uri: URI,
-        expectedResponseDto: String,
+        expectedResponseDto: T,
         customHeaders: HttpHeaders = HttpHeaders.EMPTY,
         status: HttpStatus = HttpStatus.OK
     ) {

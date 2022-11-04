@@ -26,6 +26,7 @@ class PointApplicationService(
         return pointJpaRepository.save(point)
     }
 
+    @Transactional
     fun usePoint(toUsePoint: Long, membershipCode: String, partnerId: Long): Point {
         val point = getPointByPartnerIdAndMembershipCode(partnerId, membershipCode) { category ->
             throw HoneyNotFoundException("적립한 포인트가 존재하지 않습니다. (membershipCode: $membershipCode, category: $category)")

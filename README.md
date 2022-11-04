@@ -106,11 +106,11 @@ POST /api/v1/point/use
 
 #### Request Query Param
 
-| Name    | Type   | Description              | 
-|---------|--------|--------------------------|
-| startAt | Int    | 조회할 포인트를 적립/사용한 시기의 시작기간 |
-| endAt   | String | 조회할 포인트를 적립/사용한 시기의 끝기간  |
-| point   | Int    | 멤버십 코드                   |
+| Name           | Type   | Description                          | 
+|----------------|--------|--------------------------------------|
+| startAt        | String | 조회할 포인트를 적립/사용한 시기의 시작기간      |
+| endAt          | String | 조회할 포인트를 적립/사용한 시기의 끝기간       |
+| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성   |
 
 #### Response Body Param
 
