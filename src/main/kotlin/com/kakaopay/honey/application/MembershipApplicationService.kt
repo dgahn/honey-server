@@ -13,9 +13,11 @@ class MembershipApplicationService(
 ) {
     @Transactional
     fun createMembership(userId: String): Membership {
-        val membership = createUniqueMembershipCode(userId)
-
-        return membershipJpaRepository.save(membership)
+        return membershipJpaRepository.findById(userId)
+            .orElseGet {
+                val membership = createUniqueMembershipCode(userId)
+                membershipJpaRepository.save(membership)
+            }
     }
 
     private tailrec fun createUniqueMembershipCode(userId: String, retryTime: Int = RETRY_DEFAULT_TIME): Membership {
