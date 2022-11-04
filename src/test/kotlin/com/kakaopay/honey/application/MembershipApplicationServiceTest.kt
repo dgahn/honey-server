@@ -31,7 +31,7 @@ class MembershipApplicationServiceTest(
         val expected = MembershipFixture.getMembership()
         every { membershipFactory.create(any()) } returns expected
         every { membershipJpaRepository.findById(any()) } returns Optional.empty()
-        every { membershipJpaRepository.findByCode(any()) } returns Optional.empty()
+        every { membershipJpaRepository.findByCode(any()) } returns null
         every { membershipJpaRepository.save(any()) } returns expected
         val actual = membershipApplicationService.createMembership(expected.userId)
         actual shouldBe expected
@@ -42,7 +42,7 @@ class MembershipApplicationServiceTest(
         val duplicatedMembership = MembershipFixture.getMembership()
         every { membershipFactory.create(any()) } returns duplicatedMembership
         every { membershipJpaRepository.findById(any()) } returns Optional.empty()
-        every { membershipJpaRepository.findByCode(any()) } returns Optional.of(duplicatedMembership)
+        every { membershipJpaRepository.findByCode(any()) } returns duplicatedMembership
 
         shouldThrow<IllegalStateException> {
             membershipApplicationService.createMembership(duplicatedMembership.userId)

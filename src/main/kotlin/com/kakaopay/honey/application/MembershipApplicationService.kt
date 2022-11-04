@@ -26,7 +26,7 @@ class MembershipApplicationService(
         return if (retryTime == RETRY_MAX_TIME) {
             // Todo 생성 실패 예외 추가 필요.
             throw IllegalStateException("멤버십코드 생성을 실패하였습니다.")
-        } else if (findMembership.isEmpty) {
+        } else if (findMembership == null) {
             createdMembership
         } else {
             createUniqueMembershipCode(userId, retryTime + RETRY_INCREMENT)
