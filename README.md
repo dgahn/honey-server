@@ -54,7 +54,7 @@ POST /api/v1/memberships
 ### 포인트 적립 API
 
 ```
-PUT /api/v1/point/earn
+POST /api/v1/point/earn
 ```
 
 - 포인트 적립은 상점의 업종별로 통합하여 적립
@@ -63,12 +63,11 @@ PUT /api/v1/point/earn
 
 #### Request Body Param
 
-| Name           | Type   | Description                  | 
-|----------------|--------|------------------------------|
-| category       | Int    | 업종                           |
-| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성   |
-| point          | Int    | 적립할 포인트                      |
-| partnerName    | String | 상점명                          |
+| Name           | Type   | Description                | 
+|----------------|--------|----------------------------|
+| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
+| point          | Long   | 적립할 포인트                    |
+| partnerId      | Long   | 상점 ID                      |
 
 #### Response Body Param
 
@@ -78,6 +77,10 @@ PUT /api/v1/point/earn
 
 ### 포인트 사용 API
 
+```
+POST /api/v1/point/use
+```
+
 - 포인트 적립은 상점의 업종별로 통합하여 사용
 - 적립 포인트를 초과하는 포인트 푸족 에러 반환
 - 등록된 상점이 아닌 경우 상점 오류 에러를 반환한다.
@@ -85,11 +88,11 @@ PUT /api/v1/point/earn
 
 #### Request Body Param
 
-| Name           | Type   | Description                        | 
-|----------------|--------|------------------------------------|
-| category       | Int    | 업종                                |
-| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성  |
-| point          | Int    | 적립할 포인트                          |
+| Name           | Type   | Description                | 
+|----------------|--------|----------------------------|
+| membershipCode | String | 멤버십 바코드, 10자리 숫자형 스트링으로 구성 |
+| point          | Long   | 적립할 포인트                    |
+| partnerId      | Long   | 상점 ID                      |
 
 #### Response Body Param
 

@@ -30,4 +30,8 @@ class PointApplicationService(
         point.earn(toEarnPoint)
         return pointJpaRepository.save(point)
     }
+
+    fun usePoint(point: Long, membershipCode: String, partnerId: Long): Point {
+        TODO("Not yet implemented")
+    }
 }
