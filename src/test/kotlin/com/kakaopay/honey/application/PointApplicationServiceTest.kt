@@ -36,12 +36,12 @@ class PointApplicationServiceTest(
     @Test
     fun `포인트를_적립할_수_있다`() {
         val expected = PointFixture.getPoint()
+        expected.earn(100)
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
         every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
         every { pointJpaRepository.save(any()) } returns expected
         val actual = pointApplicationService.earnPoint(100, "1234567891", 1L)
-        actual.earn(100)
         actual shouldBe expected
     }
 
@@ -66,13 +66,13 @@ class PointApplicationServiceTest(
 
     @Test
     fun `포인트를_사용할_수_있다`() {
-        val expected = PointFixture.getPoint()
+        val original = PointFixture.getPoint(100L)
+        val expected = PointFixture.getPoint(50L)
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
         every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
-        every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
+        every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns original
         every { pointJpaRepository.save(any()) } returns expected
-        val actual = pointApplicationService.usePoint(100, "1234567891", 1L)
-        actual.earn(100)
+        val actual = pointApplicationService.usePoint(50, "1234567891", 1L)
         actual shouldBe expected
     }
 

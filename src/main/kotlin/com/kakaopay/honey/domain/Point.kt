@@ -21,7 +21,7 @@ class Point(
     }
 
     fun use(toUsePoint: Long) {
-        // ToDo totalPoint가 음수가 되지 않도록 예외 설정 추가
+        check(totalPoint > toUsePoint) { "현재 저장 중인 포인트가 사용 포인트보다 많아야 합니다." }
         totalPoint -= toUsePoint
     }
 }
