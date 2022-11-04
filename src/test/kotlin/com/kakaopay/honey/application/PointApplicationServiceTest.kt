@@ -63,4 +63,15 @@ class PointApplicationServiceTest(
             pointApplicationService.earnPoint(100, "1234567891", 1L)
         }
     }
+
+    @Test
+    fun `포인트를_사용할_수_있다`() {
+        val expected = PointFixture.getPoint()
+        every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
+        every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
+        every { pointJpaRepository.save(any()) } returns expected
+        val actual = pointApplicationService.usePoint(100, "1234567891", 1L)
+        actual.earn(100)
+        actual shouldBe expected
+    }
 }

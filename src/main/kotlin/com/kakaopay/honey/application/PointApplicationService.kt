@@ -31,7 +31,15 @@ class PointApplicationService(
         return pointJpaRepository.save(point)
     }
 
-    fun usePoint(point: Long, membershipCode: String, partnerId: Long): Point {
-        TODO("Not yet implemented")
+    fun usePoint(toUsePoint: Long, membershipCode: String, partnerId: Long): Point {
+        val partner = partnerJpaRepository.findByIdOrNull(partnerId) ?: throw HoneyNotFoundException(
+            "등록되지 않은 상점입니다. (id: $partnerId)"
+        )
+        val point =
+            pointJpaRepository.findByCategoryAndMembershipCode(partner.category, membershipCode)
+                ?: Point(category = partner.category, membershipCode = membershipCode)
+
+        point.use(toUsePoint)
+        return pointJpaRepository.save(point)
     }
 }

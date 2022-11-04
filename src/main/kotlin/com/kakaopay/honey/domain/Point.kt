@@ -19,4 +19,9 @@ class Point(
     fun earn(toEarnPoint: Long) {
         totalPoint += toEarnPoint
     }
+
+    fun use(toUsePoint: Long) {
+        // ToDo totalPoint가 음수가 되지 않도록 예외 설정 추가
+        totalPoint -= toUsePoint
+    }
 }
