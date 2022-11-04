@@ -68,6 +68,7 @@ class PointApplicationServiceTest(
     fun `포인트를_사용할_수_있다`() {
         val expected = PointFixture.getPoint()
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
+        every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
         every { pointJpaRepository.save(any()) } returns expected
         val actual = pointApplicationService.usePoint(100, "1234567891", 1L)
@@ -78,6 +79,16 @@ class PointApplicationServiceTest(
     @Test
     fun `등록되지_않은_상점으로_포인트를_사용하려고_하면_HoneyNotFoundException이_발생한다`() {
         every { partnerJpaRepository.findByIdOrNull(any()) } returns null
+
+        shouldThrow<HoneyNotFoundException> {
+            pointApplicationService.usePoint(100, "1234567891", 1L)
+        }
+    }
+
+    @Test
+    fun `등록되지_않은_멤버십_코드로_포인트를_사용하려고_하면_HoneyNotFoundException이_발생한다`() {
+        every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
+        every { membershipJpaRepository.findByCode(any()) } returns null
 
         shouldThrow<HoneyNotFoundException> {
             pointApplicationService.usePoint(100, "1234567891", 1L)
