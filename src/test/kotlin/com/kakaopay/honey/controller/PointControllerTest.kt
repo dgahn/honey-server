@@ -21,7 +21,7 @@ class PointControllerTest : SpringMockMvcTestSupport() {
 
     @Test
     fun `포인트를_적립할_수_있다`() {
-        every { pointApplicationService.earnPoint(any(), any(), any(), any()) } returns PointFixture.getPoint()
+        every { pointApplicationService.earnPoint(any(), any(), any()) } returns PointFixture.getPoint()
         val uri = URI("/api/v1/point/earn")
         val request = EarnPointFixture.getRequestDto()
         val response = EarnPointFixture.getResponseDto()

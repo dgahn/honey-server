@@ -6,10 +6,9 @@ import com.kakaopay.honey.controller.dto.EarnPointResponseDto
 object EarnPointFixture {
     fun getRequestDto(): EarnPointRequestDto {
         return EarnPointRequestDto(
-            category = "A",
             membershipCode = "1111111111",
             point = 100,
-            partnerName = "상점_A"
+            partnerId = 1L
         )
     }
 

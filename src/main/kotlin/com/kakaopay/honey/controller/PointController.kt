@@ -16,10 +16,9 @@ class PointController(
     @PostMapping("/api/v1/point/earn")
     fun earnPoint(@RequestBody request: EarnPointRequestDto): ResponseEntity<EarnPointResponseDto> {
         val point = pointApplicationService.earnPoint(
-            request.category,
             request.point,
             request.membershipCode,
-            request.partnerName
+            request.partnerId
         )
         return ResponseEntity.ok(EarnPointResponseDto(point.id))
     }

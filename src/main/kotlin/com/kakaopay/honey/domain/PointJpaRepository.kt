@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PointJpaRepository : JpaRepository<Point, String> {
     fun findByCategoryAndMembershipCode(
-        category: String,
+        category: Category,
         membershipCode: String
     ): Point?
 }
