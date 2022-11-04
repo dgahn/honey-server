@@ -46,7 +46,7 @@ class PointApplicationServiceTest(
     }
 
     @Test
-    fun `등록되지_않은_상점으로_적립하려고_하면_HoneyNotFoundException이_발생한다`() {
+    fun `등록되지_않은_상점으로_포인트를_적립하려고_하면_HoneyNotFoundException이_발생한다`() {
         every { partnerJpaRepository.findByIdOrNull(any()) } returns null
 
         shouldThrow<HoneyNotFoundException> {
@@ -73,5 +73,14 @@ class PointApplicationServiceTest(
         val actual = pointApplicationService.usePoint(100, "1234567891", 1L)
         actual.earn(100)
         actual shouldBe expected
+    }
+
+    @Test
+    fun `등록되지_않은_상점으로_포인트를_사용하려고_하면_HoneyNotFoundException이_발생한다`() {
+        every { partnerJpaRepository.findByIdOrNull(any()) } returns null
+
+        shouldThrow<HoneyNotFoundException> {
+            pointApplicationService.usePoint(100, "1234567891", 1L)
+        }
     }
 }
