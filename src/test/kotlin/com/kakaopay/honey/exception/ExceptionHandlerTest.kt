@@ -1,8 +1,7 @@
-package com.kakaopay.honey.controller
+package com.kakaopay.honey.exception
 
 import com.kakaopay.honey.application.MembershipApplicationService
-import com.kakaopay.honey.exception.ErrorResponseDto
-import com.kakaopay.honey.exception.HoneyNotFoundException
+import com.kakaopay.honey.controller.MembershipController
 import com.kakaopay.honey.fixture.CreateMembershipDtoFixture
 import com.kakaopay.honey.util.SpringMockMvcTestSupport
 import com.kakaopay.honey.util.URI
@@ -32,6 +31,20 @@ class ExceptionHandlerTest : SpringMockMvcTestSupport() {
             requestDto = request,
             expectedResponseDto = ErrorResponseDto.of(exception),
             status = HttpStatus.BAD_REQUEST
+        )
+    }
+
+    @Test
+    fun `CreateMembershipFailException이_발생하면_INTERNAL_SERVER_ERROR를_반환한다`() {
+        val exception = CreateMembershipFailException()
+        every { membershipApplicationService.createMembership(any()) } throws exception
+        val uri = URI("/api/v1/memberships")
+        val request = CreateMembershipDtoFixture.getRequestDto()
+        mockMvcPostTest(
+            uri = uri,
+            requestDto = request,
+            expectedResponseDto = ErrorResponseDto.of(exception),
+            status = HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
 }

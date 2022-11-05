@@ -15,6 +15,12 @@ class ExceptionHandler {
         return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(CreateMembershipFailException::class)
+    fun handleUserIdHeaderNotFoundException(e: CreateMembershipFailException): ResponseEntity<ErrorResponseDto> {
+        logger.error { e.message }
+        return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
     companion object {
         private val logger = KotlinLogging.logger { }
     }

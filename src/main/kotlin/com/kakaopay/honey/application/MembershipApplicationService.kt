@@ -3,6 +3,7 @@ package com.kakaopay.honey.application
 import com.kakaopay.honey.domain.Membership
 import com.kakaopay.honey.domain.MembershipFactory
 import com.kakaopay.honey.domain.MembershipJpaRepository
+import com.kakaopay.honey.exception.CreateMembershipFailException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,8 +25,7 @@ class MembershipApplicationService(
         val createdMembership = membershipFactory.create(userId)
         val findMembership = membershipJpaRepository.findByCode(createdMembership.code)
         return if (retryTime == RETRY_MAX_TIME) {
-            // Todo 생성 실패 예외 추가 필요.
-            throw IllegalStateException("멤버십코드 생성을 실패하였습니다.")
+            throw CreateMembershipFailException()
         } else if (findMembership == null) {
             createdMembership
         } else {
