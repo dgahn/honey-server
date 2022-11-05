@@ -2,6 +2,7 @@ package com.kakaopay.honey.application
 
 import com.kakaopay.honey.domain.MembershipFactory
 import com.kakaopay.honey.domain.MembershipJpaRepository
+import com.kakaopay.honey.exception.CreateMembershipFailException
 import com.kakaopay.honey.fixture.MembershipFixture
 import com.ninjasquad.springmockk.MockkBean
 import io.kotest.assertions.throwables.shouldThrow
@@ -44,7 +45,7 @@ class MembershipApplicationServiceTest(
         every { membershipJpaRepository.findById(any()) } returns Optional.empty()
         every { membershipJpaRepository.findByCode(any()) } returns duplicatedMembership
 
-        shouldThrow<IllegalStateException> {
+        shouldThrow<CreateMembershipFailException> {
             membershipApplicationService.createMembership(duplicatedMembership.userId)
         }
 

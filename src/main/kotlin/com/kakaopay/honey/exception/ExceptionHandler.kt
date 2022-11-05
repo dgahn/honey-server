@@ -10,13 +10,25 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 class ExceptionHandler {
 
     @ExceptionHandler(HoneyNotFoundException::class)
-    fun handleUserIdHeaderNotFoundException(e: HoneyNotFoundException): ResponseEntity<ErrorResponseDto> {
+    fun handleHoneyNotFoundException(e: HoneyNotFoundException): ResponseEntity<ErrorResponseDto> {
+        logger.error { e.message }
+        return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(IllegalStateException::class)
+    fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponseDto> {
+        logger.error { e.message }
+        return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ErrorResponseDto> {
         logger.error { e.message }
         return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(CreateMembershipFailException::class)
-    fun handleUserIdHeaderNotFoundException(e: CreateMembershipFailException): ResponseEntity<ErrorResponseDto> {
+    fun handleCreateMembershipFailException(e: CreateMembershipFailException): ResponseEntity<ErrorResponseDto> {
         logger.error { e.message }
         return ResponseEntity(ErrorResponseDto.of(e), HttpStatus.INTERNAL_SERVER_ERROR)
     }
