@@ -1,6 +1,7 @@
 package com.kakaopay.honey.util
 
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -11,4 +12,8 @@ fun Instant.toDateString(zoneId: ZoneId = KST): String {
     val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN_FORMAT)
         .withZone(zoneId)
     return formatter.format(this)
+}
+
+fun LocalDate.toInstant(zoneId: ZoneId = KST): Instant {
+    return this.atStartOfDay(zoneId).toInstant()
 }
