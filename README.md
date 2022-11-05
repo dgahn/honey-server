@@ -102,6 +102,10 @@ POST /api/v1/point/use
 
 ### 내역 조회 API
 
+```
+GET /api/v1/point-histories
+```
+
 - 등록된 바코드가 아닌 경우 바코드 오류 에러를 반환한다.
 
 #### Request Query Param
@@ -114,9 +118,11 @@ POST /api/v1/point/use
 
 #### Response Body Param
 
-| Name        | Type | Description    |
-|-------------|------|----------------|
-| approvedAt  | Date | 포인트를 적립/사용한 시기 |
-| type        | Int  | 적립/사용한지에 대한 값  |
-| category    | Int  | 업종             |
-| partnerName | Int  | 상점 이름          |
+| Name        | Type | Description              |
+|-------------|------|--------------------------|
+| approvedAt  | Date | 포인트를 적립/사용한 시기           |
+| type        | Int  | 적립/사용한지에 대한 값            |
+| category    | Int  | 업종                       |
+| partnerName | Int  | 상점 이름                    |
+| page        | Int  | 페이지 번호(기본 값: 1)          |
+| size        | Int  | 페이지에 보이는 목록 갯수(기본 값: 10) |

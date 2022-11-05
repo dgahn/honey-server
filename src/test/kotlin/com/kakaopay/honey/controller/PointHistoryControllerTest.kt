@@ -22,11 +22,13 @@ class PointHistoryControllerTest : SpringMockMvcTestSupport() {
     @Test
     fun `포인트_사용_내역을_조회할_수_있다`() {
         val expectedHistories = PointHistoryFixture.getPointHistories()
-        every { pointHistoryApplicationService.searchHistories(any(), any(), any()) } returns expectedHistories
+        every { pointHistoryApplicationService.searchHistories(any()) } returns expectedHistories
         val uri = URI("/api/v1/point-histories")
         uri.addQueryParam("startAt", "2022-11-04")
         uri.addQueryParam("endAt", "2022-11-05")
         uri.addQueryParam("membershipCode", expectedHistories.first().membershipCode)
+        uri.addQueryParam("page", "1")
+        uri.addQueryParam("size", "50")
         val expectedResponseDto = expectedHistories.toSearchPointHistoriesResponseDto()
         mockMvcGetTest(uri, expectedResponseDto)
     }
