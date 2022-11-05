@@ -9,6 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.nio.charset.StandardCharsets
 
 @AutoConfigureMockMvc
 abstract class SpringMockMvcTestSupport {
@@ -23,7 +24,7 @@ abstract class SpringMockMvcTestSupport {
     ) {
         mockMvc.perform(
             MockMvcRequestBuilders.get(uri.value)
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8))
                 .headers(customHeaders)
         )
             .andExpect { result -> result.response.status shouldBe status.value() }
@@ -39,7 +40,7 @@ abstract class SpringMockMvcTestSupport {
     ) {
         mockMvc.perform(
             MockMvcRequestBuilders.post(uri.value)
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8))
                 .contentType(MediaType.APPLICATION_JSON)
                 .headers(customHeaders)
                 .content(requestDto.toJson())
