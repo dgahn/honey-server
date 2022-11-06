@@ -3,7 +3,7 @@ package com.kakaopay.honey.controller.dto
 import com.kakaopay.honey.domain.Category
 import com.kakaopay.honey.domain.PointEventType
 import com.kakaopay.honey.domain.PointHistory
-import com.kakaopay.honey.util.toDateString
+import com.kakaopay.honey.util.toDateTimeString
 
 data class SearchPointHistoriesResponseDto(
     val histories: List<SearchPointHistoryResponseDto>
@@ -23,7 +23,7 @@ fun List<PointHistory>.toSearchPointHistoriesResponseDto(): SearchPointHistories
 
 fun PointHistory.toSearchPointHistoriesResponseDto(): SearchPointHistoryResponseDto {
     return SearchPointHistoryResponseDto(
-        approvedAt = approvedAt!!.toDateString(),
+        approvedAt = approvedAt!!.toDateTimeString(),
         type = type,
         category = category,
         membershipCode = membershipCode,

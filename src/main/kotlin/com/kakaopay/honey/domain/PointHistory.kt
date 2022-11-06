@@ -1,18 +1,24 @@
 package com.kakaopay.honey.domain
 
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.Instant
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 class PointHistory(
     @Id
     @GeneratedValue
     val id: Long = 0,
     val type: PointEventType,
+    @Enumerated(EnumType.STRING)
     val category: Category,
     val membershipCode: String,
     val partnerName: String,

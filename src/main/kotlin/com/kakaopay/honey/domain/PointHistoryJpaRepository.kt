@@ -13,7 +13,6 @@ interface PointHistoryJpaRepository : JpaRepository<PointHistory, Long> {
          WHERE ph.membershipCode = :membershipCode
            AND ph.approvedAt BETWEEN :startAt AND :endAt
         """
-
     )
     fun searchHistories(
         startAt: Instant,

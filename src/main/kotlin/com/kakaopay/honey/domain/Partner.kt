@@ -1,6 +1,8 @@
 package com.kakaopay.honey.domain
 
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
@@ -10,6 +12,7 @@ class Partner(
     @GeneratedValue
     val id: Long = 0,
     val name: String,
+    @Enumerated(EnumType.STRING)
     val category: Category
 ) {
     override fun toString(): String {
