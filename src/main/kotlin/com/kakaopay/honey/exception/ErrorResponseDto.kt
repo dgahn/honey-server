@@ -13,5 +13,10 @@ data class ErrorResponseDto(
             message = e.message.orEmpty(),
             trace = e.stackTraceToString()
         )
+
+        fun of(e: Exception, message: String) = ErrorResponseDto(
+            message = message,
+            trace = e.stackTraceToString()
+        )
     }
 }

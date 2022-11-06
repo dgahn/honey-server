@@ -6,17 +6,20 @@ import com.kakaopay.honey.controller.dto.EarnPointResponseDto
 import com.kakaopay.honey.controller.dto.UsePointRequestDto
 import com.kakaopay.honey.controller.dto.UsePointResponseDto
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
+@Validated
 class PointController(
     private val pointApplicationService: PointApplicationService
 ) {
 
     @PostMapping("/api/v1/point/earn")
-    fun earnPoint(@RequestBody request: EarnPointRequestDto): ResponseEntity<EarnPointResponseDto> {
+    fun earnPoint(@RequestBody @Valid request: EarnPointRequestDto): ResponseEntity<EarnPointResponseDto> {
         val point = pointApplicationService.earnPoint(
             request.point,
             request.membershipCode,
@@ -26,7 +29,7 @@ class PointController(
     }
 
     @PostMapping("/api/v1/point/use")
-    fun usePoint(@RequestBody request: UsePointRequestDto): ResponseEntity<UsePointResponseDto> {
+    fun usePoint(@RequestBody @Valid request: UsePointRequestDto): ResponseEntity<UsePointResponseDto> {
         val point = pointApplicationService.usePoint(
             request.point,
             request.membershipCode,
