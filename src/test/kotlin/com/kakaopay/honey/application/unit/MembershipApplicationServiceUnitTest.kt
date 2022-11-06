@@ -1,5 +1,6 @@
-package com.kakaopay.honey.application
+package com.kakaopay.honey.application.unit
 
+import com.kakaopay.honey.application.MembershipApplicationService
 import com.kakaopay.honey.domain.MembershipFactory
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.exception.CreateMembershipFailException
@@ -18,7 +19,7 @@ import java.util.Optional
 
 @ExtendWith(SpringExtension::class)
 @Import(value = [MembershipApplicationService::class])
-class MembershipApplicationServiceTest(
+class MembershipApplicationServiceUnitTest(
     @Autowired private val membershipApplicationService: MembershipApplicationService
 ) {
     @MockkBean

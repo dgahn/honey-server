@@ -1,13 +1,16 @@
 package com.kakaopay.honey.domain
 
+import org.springframework.data.annotation.Version
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
 class Point(
     @Id
+    @GeneratedValue
     val id: Long = 0,
     @Enumerated(EnumType.STRING)
     val category: Category,
@@ -20,8 +23,17 @@ class Point(
         totalPoint += toEarnPoint
     }
 
+    @Version
+    var version: Long = 1
+        protected set
+
     fun use(toUsePoint: Long) {
         check(totalPoint > toUsePoint) { "현재 저장 중인 포인트가 사용 포인트보다 많아야 합니다." }
         totalPoint -= toUsePoint
+    }
+
+    override fun toString(): String {
+        return "Point(id=$id, category=$category, membershipCode='$membershipCode', " +
+            "totalPoint=$totalPoint, version=$version)"
     }
 }

@@ -12,9 +12,9 @@ object UsePointFixture {
         )
     }
 
-    fun getResponseDto(): UsePointResponseDto {
+    fun getResponseDto(id: Long = 1L): UsePointResponseDto {
         return UsePointResponseDto(
-            1L
+            id
         )
     }
 }

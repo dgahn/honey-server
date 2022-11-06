@@ -1,5 +1,6 @@
-package com.kakaopay.honey.application
+package com.kakaopay.honey.application.unit
 
+import com.kakaopay.honey.application.PointHistoryApplicationService
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.domain.PointHistoryJpaRepository
 import com.kakaopay.honey.exception.HoneyNotFoundException
@@ -18,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @Import(value = [PointHistoryApplicationService::class])
-class PointHistoryApplicationServiceTest(
+class PointHistoryApplicationServiceUnitTest(
     @Autowired private val pointHistoryApplicationService: PointHistoryApplicationService
 ) {
     @MockkBean

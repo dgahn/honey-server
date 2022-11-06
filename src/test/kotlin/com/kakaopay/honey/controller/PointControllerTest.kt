@@ -25,7 +25,7 @@ class PointControllerTest : SpringMockMvcTestSupport() {
         every { pointApplicationService.earnPoint(any(), any(), any()) } returns PointFixture.getPoint()
         val uri = URI("/api/v1/point/earn")
         val request = EarnPointFixture.getRequestDto()
-        val response = EarnPointFixture.getResponseDto()
+        val response = EarnPointFixture.getResponseDto(id = 0L)
         mockMvcPostTest(uri, request, response)
     }
 
@@ -34,7 +34,7 @@ class PointControllerTest : SpringMockMvcTestSupport() {
         every { pointApplicationService.usePoint(any(), any(), any()) } returns PointFixture.getPoint()
         val uri = URI("/api/v1/point/use")
         val request = UsePointFixture.getRequestDto()
-        val response = UsePointFixture.getResponseDto()
+        val response = UsePointFixture.getResponseDto(id = 0L)
         mockMvcPostTest(uri, request, response)
     }
 }

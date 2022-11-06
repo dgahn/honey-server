@@ -1,5 +1,6 @@
-package com.kakaopay.honey.application
+package com.kakaopay.honey.application.unit
 
+import com.kakaopay.honey.application.PointApplicationService
 import com.kakaopay.honey.domain.Category
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.domain.Partner
@@ -21,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @Import(value = [PointApplicationService::class])
-class PointApplicationServiceTest(
+class PointApplicationServiceUnitTest(
     @Autowired private val pointApplicationService: PointApplicationService
 ) {
     @MockkBean
