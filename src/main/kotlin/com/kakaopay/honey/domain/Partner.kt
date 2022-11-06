@@ -28,6 +28,4 @@ class Partner(
     override fun hashCode(): Int {
         return id.hashCode()
     }
-
-
 }

@@ -5,10 +5,12 @@ import com.kakaopay.honey.domain.Category
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.domain.Partner
 import com.kakaopay.honey.domain.PartnerJpaRepository
+import com.kakaopay.honey.domain.PointHistoryJpaRepository
 import com.kakaopay.honey.domain.PointJpaRepository
 import com.kakaopay.honey.exception.HoneyNotFoundException
 import com.kakaopay.honey.fixture.MembershipFixture
 import com.kakaopay.honey.fixture.PointFixture
+import com.kakaopay.honey.fixture.PointHistoryFixture
 import com.ninjasquad.springmockk.MockkBean
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -34,6 +36,9 @@ class PointApplicationServiceUnitTest(
     @MockkBean
     lateinit var membershipJpaRepository: MembershipJpaRepository
 
+    @MockkBean
+    lateinit var pointHistoryJpaRepository: PointHistoryJpaRepository
+
     @Test
     fun `포인트를_적립할_수_있다`() {
         val expected = PointFixture.getPoint()
@@ -42,6 +47,7 @@ class PointApplicationServiceUnitTest(
         every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
         every { pointJpaRepository.save(any()) } returns expected
+        every { pointHistoryJpaRepository.save(any()) } returns PointHistoryFixture.getPointHistory()
         val actual = pointApplicationService.earnPoint(100, "1234567891", 1L)
         actual shouldBe expected
     }
@@ -73,6 +79,7 @@ class PointApplicationServiceUnitTest(
         every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns original
         every { pointJpaRepository.save(any()) } returns expected
+        every { pointHistoryJpaRepository.save(any()) } returns PointHistoryFixture.getPointHistory()
         val actual = pointApplicationService.usePoint(50, "1234567891", 1L)
         actual shouldBe expected
     }

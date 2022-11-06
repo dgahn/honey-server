@@ -4,8 +4,12 @@ import com.kakaopay.honey.domain.Category
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.domain.PartnerJpaRepository
 import com.kakaopay.honey.domain.Point
+import com.kakaopay.honey.domain.PointEventType
+import com.kakaopay.honey.domain.PointHistory
+import com.kakaopay.honey.domain.PointHistoryJpaRepository
 import com.kakaopay.honey.domain.PointJpaRepository
 import com.kakaopay.honey.exception.HoneyNotFoundException
+import com.kakaopay.honey.util.after
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional
 class PointApplicationService(
     private val pointJpaRepository: PointJpaRepository,
     private val partnerJpaRepository: PartnerJpaRepository,
-    private val membershipJpaRepository: MembershipJpaRepository
+    private val membershipJpaRepository: MembershipJpaRepository,
+    private val pointHistoryJpaRepository: PointHistoryJpaRepository
 ) {
     @Transactional
     fun earnPoint(toEarnPoint: Long, membershipCode: String, partnerId: Long): Point {
@@ -24,6 +29,7 @@ class PointApplicationService(
 
         point.earn(toEarnPoint)
         return pointJpaRepository.save(point)
+            .after { savePointHistory(PointEventType.EARN, this, partnerId) }
     }
 
     @Transactional
@@ -34,6 +40,21 @@ class PointApplicationService(
 
         point.use(toUsePoint)
         return pointJpaRepository.save(point)
+            .after { savePointHistory(PointEventType.USE, this, partnerId) }
+    }
+
+    private fun savePointHistory(type: PointEventType, point: Point, partnerId: Long) {
+        val partner = partnerJpaRepository.findByIdOrNull(partnerId) ?: throw HoneyNotFoundException(
+            "등록되지 않은 상점입니다. (id: $partnerId)"
+        )
+        pointHistoryJpaRepository.save(
+            PointHistory(
+                type = type,
+                category = point.category,
+                membershipCode = point.membershipCode,
+                partnerName = partner.name
+            )
+        )
     }
 
     private fun getPointByPartnerIdAndMembershipCode(

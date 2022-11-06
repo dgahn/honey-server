@@ -18,4 +18,15 @@ object PointHistoryFixture {
             )
         }
     }
+
+    fun getPointHistory(): PointHistory {
+        return PointHistory(
+            id = 1L,
+            type = PointEventType.EARN,
+            category = Category.A,
+            membershipCode = "1234567891",
+            partnerName = "partnerA",
+            approvedAt = Instant.EPOCH
+        )
+    }
 }

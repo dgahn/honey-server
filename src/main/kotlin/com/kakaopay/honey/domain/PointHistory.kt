@@ -25,7 +25,7 @@ class PointHistory(
 
     override fun toString(): String {
         return "PointHistory(id=$id, type=$type, category=$category, membershipCode='$membershipCode', " +
-                "partnerName='$partnerName', approvedAt=$approvedAt)"
+            "partnerName='$partnerName', approvedAt=$approvedAt)"
     }
 
     override fun equals(other: Any?): Boolean {

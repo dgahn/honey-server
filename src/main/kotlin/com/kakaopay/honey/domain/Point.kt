@@ -34,7 +34,7 @@ class Point(
 
     override fun toString(): String {
         return "Point(id=$id, category=$category, membershipCode='$membershipCode', " +
-                "totalPoint=$totalPoint, version=$version)"
+            "totalPoint=$totalPoint, version=$version)"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -51,5 +51,4 @@ class Point(
     override fun hashCode(): Int {
         return id.hashCode()
     }
-
 }
