@@ -44,7 +44,7 @@ class PointApplicationServiceUnitTest(
         val expected = PointFixture.getPoint()
         expected.earn(100)
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
-        every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns null
         every { pointJpaRepository.save(any()) } returns expected
         every { pointHistoryJpaRepository.save(any()) } returns PointHistoryFixture.getPointHistory()
@@ -64,7 +64,7 @@ class PointApplicationServiceUnitTest(
     @Test
     fun `등록되지_않은_멤버십_코드로_포인트를_적립하려고_하면_HoneyNotFoundException이_발생한다`() {
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
-        every { membershipJpaRepository.findByCode(any()) } returns null
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns null
 
         shouldThrow<HoneyNotFoundException> {
             pointApplicationService.earnPoint(100, "1234567891", 1L)
@@ -76,7 +76,7 @@ class PointApplicationServiceUnitTest(
         val original = PointFixture.getPoint(100L)
         val expected = PointFixture.getPoint(50L)
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
-        every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns MembershipFixture.getMembership()
         every { pointJpaRepository.findByCategoryAndMembershipCode(any(), any()) } returns original
         every { pointJpaRepository.save(any()) } returns expected
         every { pointHistoryJpaRepository.save(any()) } returns PointHistoryFixture.getPointHistory()
@@ -96,7 +96,7 @@ class PointApplicationServiceUnitTest(
     @Test
     fun `등록되지_않은_멤버십_코드로_포인트를_사용하려고_하면_HoneyNotFoundException이_발생한다`() {
         every { partnerJpaRepository.findByIdOrNull(any()) } returns Partner(1L, "partner_1", Category.A)
-        every { membershipJpaRepository.findByCode(any()) } returns null
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns null
 
         shouldThrow<HoneyNotFoundException> {
             pointApplicationService.usePoint(100, "1234567891", 1L)

@@ -65,7 +65,7 @@ class PointApplicationService(
         val partner = partnerJpaRepository.findByIdOrNull(partnerId) ?: throw HoneyNotFoundException(
             "등록되지 않은 상점입니다. (id: $partnerId)"
         )
-        membershipJpaRepository.findByCode(membershipCode)
+        membershipJpaRepository.findByIdOrNull(membershipCode)
             ?: throw HoneyNotFoundException("등록되지 않은 멤버십 코드입니다. (membershipCode: $membershipCode)")
 
         return pointJpaRepository.findByCategoryAndMembershipCode(partner.category, membershipCode)

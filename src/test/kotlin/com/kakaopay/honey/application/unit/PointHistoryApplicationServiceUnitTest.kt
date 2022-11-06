@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
@@ -33,7 +34,7 @@ class PointHistoryApplicationServiceUnitTest(
         val expected = PointHistoryFixture.getPointHistories()
         val membershipCode = expected.first().membershipCode
         every { pointHistoryJpaRepository.searchHistories(any(), any(), any(), any()) } returns expected
-        every { membershipJpaRepository.findByCode(any()) } returns MembershipFixture.getMembership()
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns MembershipFixture.getMembership()
         val searchCondition = SearchPointHistoryFixture.getSearchPointHistoryCondition(membershipCode)
         val actual = pointHistoryApplicationService.searchHistories(searchCondition)
         actual shouldBe expected
@@ -44,7 +45,7 @@ class PointHistoryApplicationServiceUnitTest(
         val expected = PointHistoryFixture.getPointHistories()
         val membershipCode = expected.first().membershipCode
         val searchCondition = SearchPointHistoryFixture.getSearchPointHistoryCondition(membershipCode)
-        every { membershipJpaRepository.findByCode(any()) } returns null
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns null
         shouldThrow<HoneyNotFoundException> {
             pointHistoryApplicationService.searchHistories(searchCondition)
         }

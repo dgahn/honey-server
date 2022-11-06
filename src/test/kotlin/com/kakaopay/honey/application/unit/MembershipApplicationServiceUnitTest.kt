@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.util.Optional
 
@@ -33,7 +34,7 @@ class MembershipApplicationServiceUnitTest(
         val expected = MembershipFixture.getMembership()
         every { membershipFactory.create(any()) } returns expected
         every { membershipJpaRepository.findById(any()) } returns Optional.empty()
-        every { membershipJpaRepository.findByCode(any()) } returns null
+        every { membershipJpaRepository.findByUserId(any()) } returns null
         every { membershipJpaRepository.save(any()) } returns expected
         val actual = membershipApplicationService.createMembership(expected.userId)
         actual shouldBe expected
@@ -43,8 +44,8 @@ class MembershipApplicationServiceUnitTest(
     fun `이미_발급된_멤버십_코드인_경우_코드를_최대_5번_다시_생성한다`() {
         val duplicatedMembership = MembershipFixture.getMembership()
         every { membershipFactory.create(any()) } returns duplicatedMembership
-        every { membershipJpaRepository.findById(any()) } returns Optional.empty()
-        every { membershipJpaRepository.findByCode(any()) } returns duplicatedMembership
+        every { membershipJpaRepository.findByUserId(any()) } returns null
+        every { membershipJpaRepository.findByIdOrNull(any()) } returns duplicatedMembership
 
         shouldThrow<CreateMembershipFailException> {
             membershipApplicationService.createMembership(duplicatedMembership.userId)
@@ -56,7 +57,7 @@ class MembershipApplicationServiceUnitTest(
     @Test
     fun `이미_발급한_멤버십_코드가_있는_유저는_기존_멤버십_코드를_전달한다`() {
         val expected = MembershipFixture.getMembership()
-        every { membershipJpaRepository.findById(any()) } returns Optional.of(expected)
+        every { membershipJpaRepository.findByUserId(any()) } returns expected
 
         val actual = membershipApplicationService.createMembership(expected.userId)
         actual shouldBe expected

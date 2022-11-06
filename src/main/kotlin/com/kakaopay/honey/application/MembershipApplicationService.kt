@@ -4,6 +4,7 @@ import com.kakaopay.honey.domain.Membership
 import com.kakaopay.honey.domain.MembershipFactory
 import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.exception.CreateMembershipFailException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,16 +15,15 @@ class MembershipApplicationService(
 ) {
     @Transactional
     fun createMembership(userId: String): Membership {
-        return membershipJpaRepository.findById(userId)
-            .orElseGet {
-                val membership = createUniqueMembershipCode(userId)
-                membershipJpaRepository.save(membership)
-            }
+        return membershipJpaRepository.findByUserId(userId) ?: run {
+            val membership = createUniqueMembershipCode(userId)
+            membershipJpaRepository.save(membership)
+        }
     }
 
     private tailrec fun createUniqueMembershipCode(userId: String, retryTime: Int = RETRY_DEFAULT_TIME): Membership {
         val createdMembership = membershipFactory.create(userId)
-        val findMembership = membershipJpaRepository.findByCode(createdMembership.code)
+        val findMembership = membershipJpaRepository.findByIdOrNull(createdMembership.code)
         return if (retryTime == RETRY_MAX_TIME) {
             throw CreateMembershipFailException()
         } else if (findMembership == null) {

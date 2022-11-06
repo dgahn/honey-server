@@ -5,6 +5,7 @@ import com.kakaopay.honey.domain.MembershipJpaRepository
 import com.kakaopay.honey.domain.PointHistory
 import com.kakaopay.honey.domain.PointHistoryJpaRepository
 import com.kakaopay.honey.exception.HoneyNotFoundException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,8 +16,10 @@ class PointHistoryApplicationService(
 ) {
     @Transactional(readOnly = true)
     fun searchHistories(searchCondition: SearchHistoryCondition): List<PointHistory> {
-        membershipJpaRepository.findByCode(searchCondition.membershipCode)
-            ?: throw HoneyNotFoundException("등록되지 않은 멤버십 코드입니다. (membershipCode: ${searchCondition.membershipCode})")
+        membershipJpaRepository.findByIdOrNull(searchCondition.membershipCode)
+            ?: throw HoneyNotFoundException(
+                "등록되지 않은 멤버십 코드입니다. (membershipCode: ${searchCondition.membershipCode})"
+            )
         return pointHistoryJpaRepository.searchHistories(
             searchCondition.startAtInstant,
             searchCondition.endAtInstant,
